@@ -2,6 +2,7 @@
   import { resolve } from "$app/paths";
   import { Clock, seconds } from "#lib/clock.svelte.ts";
   import BrandMenu from "#lib/components/BrandMenu.svelte";
+  import HelpButton from "#lib/components/HelpButton.svelte";
   import Icon from "#lib/components/Icon.svelte";
   import Pie from "#lib/components/Pie.svelte";
   import TimerPicker from "#lib/components/TimerPicker.svelte";
@@ -183,53 +184,59 @@
     </section>
   </div>
 
+  <!-- Help at the bottom left, the controls centred; the empty column on the
+       right keeps them centred on the screen. -->
   <div
-    class="flex shrink-0 flex-wrap items-center justify-center gap-3 pt-2 transition-opacity duration-500 {controlsHidden
+    class="grid shrink-0 grid-cols-[2.75rem_1fr_2.75rem] items-end gap-2 pt-2 transition-opacity duration-500 {controlsHidden
       ? 'pointer-events-none opacity-0'
       : ''}"
   >
-    {#if current.status !== "idle"}
-      <button type="button" class={control} onclick={() => app.restart()}>
-        <Icon name="restart" class="size-5" />
-        Restart
-      </button>
-    {/if}
+    <HelpButton />
+    <div class="flex flex-wrap items-center justify-center gap-3">
+      {#if current.status !== "idle"}
+        <button type="button" class={control} onclick={() => app.restart()}>
+          <Icon name="restart" class="size-5" />
+          Restart
+        </button>
+      {/if}
 
-    {#if current.status === "idle"}
-      <button type="button" class={big} onclick={primary}>
-        <Icon name="play" class="size-6" />
-        Start
-      </button>
-    {:else if current.status === "running"}
-      <button type="button" class={big} onclick={primary}>
-        <Icon name="pause" class="size-6" />
-        Pause
-      </button>
-    {:else if current.status === "paused"}
-      <button type="button" class={big} onclick={primary}>
-        <Icon name="play" class="size-6" />
-        Resume
-      </button>
-    {:else if current.status === "waiting" && next}
-      <button type="button" class={big} onclick={primary}>
-        <Icon name="play" class="size-6" />
-        Start
-        {#if next.emoji}<span aria-hidden="true">{next.emoji}</span>{/if}
-        {labelOf(current.index + 1)}
-      </button>
-    {/if}
+      {#if current.status === "idle"}
+        <button type="button" class={big} onclick={primary}>
+          <Icon name="play" class="size-6" />
+          Start
+        </button>
+      {:else if current.status === "running"}
+        <button type="button" class={big} onclick={primary}>
+          <Icon name="pause" class="size-6" />
+          Pause
+        </button>
+      {:else if current.status === "paused"}
+        <button type="button" class={big} onclick={primary}>
+          <Icon name="play" class="size-6" />
+          Resume
+        </button>
+      {:else if current.status === "waiting" && next}
+        <button type="button" class={big} onclick={primary}>
+          <Icon name="play" class="size-6" />
+          Start
+          {#if next.emoji}<span aria-hidden="true">{next.emoji}</span>{/if}
+          {labelOf(current.index + 1)}
+        </button>
+      {/if}
 
-    {#if current.status === "running" || current.status === "paused"}
-      <button type="button" class={control} onclick={() => app.advance()}>
-        <Icon name="skip" class="size-5" />
-        {next ? "Skip" : "Finish"}
-      </button>
-    {/if}
-    {#if current.status !== "idle"}
-      <button type="button" class={control} onclick={() => app.addMinute()}>
-        +1 min
-      </button>
-    {/if}
+      {#if current.status === "running" || current.status === "paused"}
+        <button type="button" class={control} onclick={() => app.advance()}>
+          <Icon name="skip" class="size-5" />
+          {next ? "Skip" : "Finish"}
+        </button>
+      {/if}
+      {#if current.status !== "idle"}
+        <button type="button" class={control} onclick={() => app.addMinute()}>
+          +1 min
+        </button>
+      {/if}
+    </div>
+    <span aria-hidden="true"></span>
   </div>
 </main>
 

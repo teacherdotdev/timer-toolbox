@@ -2,6 +2,8 @@
   import "./layout.css";
   import favicon from "#lib/assets/favicon.svg";
   import { seconds } from "#lib/clock.svelte.ts";
+  import { page } from "$app/state";
+  import HelpButton from "#lib/components/HelpButton.svelte";
   import TimerEditor from "#lib/components/TimerEditor.svelte";
   import UndoToast from "#lib/components/UndoToast.svelte";
   import { editor } from "#lib/editor.svelte.ts";
@@ -72,6 +74,11 @@
 />
 
 {@render children()}
+
+<!-- The pie screen puts help in its control bar, so it fades with the controls. -->
+{#if page.route.id !== "/pie"}
+  <HelpButton class="fixed bottom-4 left-4 z-40" />
+{/if}
 
 {#if editor.editing}
   {@const editing = editor.editing}

@@ -22,7 +22,8 @@
     | "up"
     | "down"
     | "sound"
-    | "copy";
+    | "copy"
+    | "help";
 </script>
 
 <script lang="ts">
@@ -105,5 +106,9 @@
   {:else if name === "copy"}
     <rect x="8.5" y="8.5" width="12" height="12" rx="2" />
     <path d="M15.5 8.5V5.5a2 2 0 0 0-2-2h-8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h3" />
+  {:else if name === "help"}
+    <circle cx="12" cy="12" r="9.5" />
+    <path d="M9.4 9.3a2.7 2.7 0 0 1 5.2.9c0 1.8-2.6 2.4-2.6 4" />
+    <path d="M12 17.4h.01" stroke-width="3" />
   {/if}
 </svg>

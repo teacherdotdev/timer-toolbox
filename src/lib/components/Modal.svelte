@@ -6,12 +6,15 @@
   let {
     title,
     onclose,
+    closeLabel = "Close",
     size = "large",
     children,
     footer,
   }: {
     title: string;
     onclose: () => void;
+    /** What the close button is called for screen readers. */
+    closeLabel?: string;
     /** "large" fills most of the screen; "medium" is a tall column; "small" is a compact centred card. */
     size?: "large" | "medium" | "small";
     children: Snippet;
@@ -86,7 +89,7 @@
         type="button"
         class="inline-flex size-12 items-center justify-center rounded-full text-slate-600 hover:bg-slate-100 active:bg-slate-200"
         onclick={onclose}
-        aria-label="Close"
+        aria-label={closeLabel}
       >
         <Icon name="close" class="size-7" />
       </button>
